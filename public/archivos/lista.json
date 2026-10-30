@@ -1,0 +1,47 @@
+[
+ {
+  "u": "img/fotos/perrito-1.jpg",
+  "tipo": "image/jpeg",
+  "nombre": "perrito-1.jpg"
+ },
+ {
+  "u": "img/fotos/perrito-2.jpg",
+  "tipo": "image/jpeg",
+  "nombre": "perrito-2.jpg"
+ },
+ {
+  "u": "img/fotos/perrito-3.jpg",
+  "tipo": "image/jpeg",
+  "nombre": "perrito-3.jpg"
+ },
+ {
+  "u": "img/fotos/perrito-4.jpg",
+  "tipo": "image/jpeg",
+  "nombre": "perrito-4.jpg"
+ },
+ {
+  "u": "img/portada.png",
+  "tipo": "image/png",
+  "nombre": "portada.png"
+ },
+ {
+  "u": "img/stickers/diamante.svg",
+  "tipo": "image/svg+xml",
+  "nombre": "diamante.svg"
+ },
+ {
+  "u": "img/stickers/panal.svg",
+  "tipo": "image/svg+xml",
+  "nombre": "panal.svg"
+ },
+ {
+  "u": "img/stickers/pasto.svg",
+  "tipo": "image/svg+xml",
+  "nombre": "pasto.svg"
+ },
+ {
+  "u": "img/stickers/tierra.svg",
+  "tipo": "image/svg+xml",
+  "nombre": "tierra.svg"
+ }
+]

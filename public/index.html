@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>letras para mi creador</title>
+  <meta name="description" content="Letras, canciones, videos y fotos de la creadora. Minecraft y Enjambre.">
+  <link rel="icon" href="img/portada.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/mascota.css">
+  <link rel="stylesheet" href="css/modo-creador.css">
+  <link rel="stylesheet" href="css/temas.css">
+  <link rel="stylesheet" href="css/reproductor.css">
+</head>
+<body>
+  <a class="saltar" href="#publicaciones">Saltar a las publicaciones</a>
+  <div id="st" aria-hidden="true"></div>
+  <!-- personaje invitado (AuronPlay): dice frases y se puede arrastrar por la página -->
+  <div id="capa-cameo"><div class="cameo" id="cameo" hidden></div></div>
+
+  <!-- Barra del Modo Creador (solo aparece con Ctrl+Shift+E y la contraseña) -->
+  <div id="barra-admin" class="barra-admin" hidden>
+    <b class="ba-titulo">⛏ Modo<br>creador</b>
+    <div class="ba-grupo">
+      <button data-accion="nueva" class="ba-prin" title="Nueva publicación">➕<span>Publicar</span></button>
+      <button data-accion="agregar" title="Agregar texto, imagen, sticker, botón o widget">✚<span>Agregar</span></button>
+      <button data-accion="widgets" title="Activar, ordenar y ajustar los widgets">🧩<span>Widgets</span></button>
+      <button data-accion="estilos" title="Fuentes, fondos, bordes, sombras y CSS">🖌<span>Estilos</span></button>
+      <button data-accion="personalizar" title="Temas, colores, título y cabecera">🎨<span>Temas</span></button>
+      <button data-accion="perfil" title="Tu perfil y redes sociales">👤<span>Perfil</span></button>
+    </div>
+    <div class="ba-grupo">
+      <button data-accion="deshacer" id="ba-deshacer" title="Deshacer (Ctrl+Z)">↶<span>Deshacer</span></button>
+      <button data-accion="rehacer" id="ba-rehacer" title="Rehacer (Ctrl+Y)">↷<span>Rehacer</span></button>
+      <button data-accion="rejilla" id="ba-rejilla" title="Ajustar a la rejilla" aria-pressed="false">▦<span>Rejilla</span></button>
+      <button data-accion="previa" title="Ver la página como tus visitantes">👁<span>Vista previa</span></button>
+      <button data-accion="guardar" title="Guardar ahora (también se guarda solo)">💾<span>Guardar</span></button>
+    </div>
+    <div class="ba-grupo ba-disp">
+      <button data-accion="disp" data-disp="pc" aria-pressed="true" title="Computadora">💻<span>Compu</span></button>
+      <button data-accion="disp" data-disp="tablet" aria-pressed="false" title="Ver y editar en tablet">📱<span>Tablet</span></button>
+      <button data-accion="disp" data-disp="movil" aria-pressed="false" title="Ver y editar en celular">📲<span>Celular</span></button>
+    </div>
+    <div class="ba-grupo">
+      <button data-accion="copias" title="Copia de seguridad y versiones">🗂<span>Copias</span></button>
+      <button data-accion="ayuda" title="Recorrido guiado">❓<span>Ayuda</span></button>
+    </div>
+    <span id="ba-estado" class="ba-estado" role="status"></span>
+    <button data-accion="salir" class="ba-salir" title="Salir del Modo Creador (Ctrl+Shift+E)">🚪<span>Salir</span></button>
+    <button data-accion="volver" class="ba-volver">✏ Volver a editar</button>
+  </div>
+
+  <!-- Panel de propiedades del Modo Creador -->
+  <aside id="propiedades" class="propiedades" aria-label="Propiedades" hidden></aside>
+
+  <div class="pagina">
+    <!-- ======================= Contenido de la creadora ======================= -->
+    <main class="contenido" id="contenido">
+      <header class="hero">
+        <div class="hero-banner" id="hero-banner"></div>
+        <div class="hero-fx" aria-hidden="true"></div>
+        <div class="hero-cuerpo">
+          <h1 id="titulo">letras para mi creador</h1>
+          <p class="lema" id="lema">⛏ minecraft · ♪ enjambre ♪</p>
+          <div class="hero-fila">
+            <div class="perfil" id="perfil"></div>
+            <figure class="hero-gif" id="gf"></figure>
+          </div>
+        </div>
+      </header>
+
+      <section class="publicaciones" id="publicaciones">
+        <div class="pub-cabeza">
+          <h2>📜 Publicaciones</h2>
+          <label class="buscar"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar por título, fecha o tipo" aria-label="Buscar publicaciones"></label>
+        </div>
+        <nav class="pestanas" id="pestanas" aria-label="Pestañas"></nav>
+        <!-- la destacada va debajo de las pestañas para que no se muevan al cambiar de pestaña -->
+        <article class="destacada" id="destacada" aria-label="Publicación destacada" hidden></article>
+        <div class="rejilla" id="rejilla"></div>
+      </section>
+
+      <section class="libro-sec" id="libro-sec">
+        <div class="libro-texto">
+          <h2 id="libro-titulo">📖 Mi libro</h2>
+          <p>Ábrelo y pasa las páginas con las flechas, deslizando o con ← →.</p>
+          <div id="libro-admin"></div>
+        </div>
+        <div id="bk"></div>
+      </section>
+
+      <footer class="pie">
+        <p class="pie-titulo" id="pie-titulo">letras para mi creador</p>
+        <div class="soc" id="pie-redes"></div>
+        <button id="efectos" class="efectos-btn" aria-pressed="true" title="Encender o apagar partículas y criaturas">✨ Efectos</button>
+        <button id="admin" class="admin-btn" title="Entrar al Modo Creador">Admin</button>
+      </footer>
+    </main>
+
+    <!-- ======================= Paneles interactivos ======================= -->
+    <aside class="lateral" id="lateral" aria-label="Paneles interactivos">
+      <details class="panel panel-musica" data-panel="musica" open>
+        <summary><h2>🎵 Música</h2></summary>
+        <div class="panel-cuerpo">
+          <!-- Reproductor estilo iPhone: portada grande sobre vidrio difuminado -->
+          <div class="ip" id="reproductor">
+            <div class="ip-fondo" aria-hidden="true"></div>
+            <div class="ip-cont">
+              <div class="ip-arte" id="cv2" aria-hidden="true"></div>
+              <div class="ip-info">
+                <div class="ip-textos"><b id="tn">Sin canciones</b><span id="ip-artista">Agrégalas en el Modo Creador</span></div>
+                <span class="ip-barras" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="ip-progreso">
+                <input id="pr" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posición de la canción">
+                <div class="ip-tiempos"><span id="ct">0:00</span><span id="dt">-0:00</span></div>
+              </div>
+              <div class="ip-controles">
+                <button id="b0" class="ip-btn" title="Anterior" aria-label="Canción anterior"><svg viewBox="0 0 28 24" aria-hidden="true"><path d="M13 5.2v13.6c0 .9-1 1.4-1.7.9L2.6 13c-.6-.5-.6-1.4 0-1.9l8.7-6.7c.7-.6 1.7-.1 1.7.8zm13 0v13.6c0 .9-1 1.4-1.7.9L15.6 13c-.6-.5-.6-1.4 0-1.9l8.7-6.7c.7-.6 1.7-.1 1.7.8z"/></svg></button>
+                <button id="b1" class="ip-btn ip-play" title="Reproducir / Pausar" aria-label="Reproducir"></button>
+                <button id="b2" class="ip-btn" title="Siguiente" aria-label="Siguiente canción"><svg viewBox="0 0 28 24" aria-hidden="true"><path d="M2 5.2v13.6c0 .9 1 1.4 1.7.9l8.7-6.7c.6-.5.6-1.4 0-1.9L3.7 4.4C3 3.8 2 4.3 2 5.2zm13 0v13.6c0 .9 1 1.4 1.7.9l8.7-6.7c.6-.5.6-1.4 0-1.9l-8.7-6.7c-.7-.6-1.7-.1-1.7.8z"/></svg></button>
+              </div>
+              <div class="ip-volumen">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4c-.6 0-1-.4-1-1v-3c0-.6.4-1 1-1z"/></svg>
+                <input id="vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5h3.2L11 5.6v12.8l-4.8-3.9H3c-.6 0-1-.4-1-1v-3c0-.6.4-1 1-1z"/><path d="M14.5 8.8a4.5 4.5 0 0 1 0 6.4M17.3 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+          </div>
+          <h3 class="ip-sig">A continuación</h3>
+          <div class="tl" id="tl"></div>
+        </div>
+      </details>
+
+      <details class="panel" data-panel="mascota" open>
+        <summary><h2>🐶 <span id="nom-mascota">Mi perrito</span></h2></summary>
+        <div class="panel-cuerpo">
+          <div id="dock-mascota"></div>
+          <p class="ayuda">Arrástralo a donde quieras · clic para sentarlo · 🦮 para pasear · 📷 su álbum</p>
+        </div>
+      </details>
+
+      <details class="panel win95 paint-window" data-panel="pizarra" open>
+        <summary class="win95-titlebar">
+          <h2 class="win95-title">🎨 pizarra.bmp - Paint</h2>
+          <span class="win95-controls" aria-hidden="true"><span class="win95-btn">_</span><span class="win95-btn">□</span><span class="win95-btn win95-close">✕</span></span>
+        </summary>
+        <div class="win95-body">
+          <div class="paint-toolbar">
+            <button id="toolPen" class="tool active" title="Lápiz" aria-label="Lápiz">✏️</button>
+            <button id="toolFill" class="tool" title="Bote de pintura" aria-label="Bote de pintura">🪣</button>
+            <button id="toolEraser" class="tool" title="Borrador" aria-label="Borrador">🧽</button>
+            <button id="cl" class="tool" title="Borrar todo" aria-label="Borrar todo">🗑️</button>
+            <button id="dl" class="tool" title="Descargar dibujo" aria-label="Descargar dibujo">💾</button>
+            <span class="tool-sep"></span>
+            <input id="sz" type="range" min="1" max="30" value="4" title="Grosor" aria-label="Grosor">
+            <input id="cp" type="color" value="#000000" title="Color" aria-label="Color">
+          </div>
+          <div class="paint-canvas-wrap">
+            <canvas id="cv" width="360" height="220" aria-label="Pizarra para dibujar"></canvas>
+          </div>
+          <div class="palette-row">
+            <div id="cs" class="paint-palette"></div>
+            <button id="togglePalette" class="tool palette-toggle" title="Ver todos los colores">Todos</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="panel" data-panel="animo" open>
+        <summary><h2>😊 Ánimo y tiempo</h2></summary>
+        <div class="panel-cuerpo">
+          <select id="mo" aria-label="¿Cómo te sientes hoy?"></select>
+          <div id="tm"></div>
+        </div>
+      </details>
+
+      <details class="panel" data-panel="calendario" open>
+        <summary><h2>📅 Calendario</h2></summary>
+        <div class="panel-cuerpo">
+          <div id="ca"></div>
+          <div id="ed"></div>
+        </div>
+      </details>
+    </aside>
+  </div>
+
+  <div id="md" class="modal" hidden></div>
+  <div id="ms" role="status" aria-live="polite"></div>
+
+  <!-- datos: hablan con server.js, que guarda todo en MongoDB Atlas -->
+  <script src="js/datos.js"></script>
+  <script src="js/libro.js"></script>
+  <script src="js/mascota.js"></script>
+  <script src="js/bloques.js"></script>
+  <script src="js/temas.js"></script>
+  <script src="js/modo-creador.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

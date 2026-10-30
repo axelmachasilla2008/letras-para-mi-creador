@@ -1,0 +1,68 @@
+/* Mascota digital — mascota.css */
+.mm{--ma:#5a3825;--my:#f7d34a;--mp:#fbf4dc;--mt:#3b2416;font:20px 'VT323','Courier New',monospace;color:var(--mt)}
+.mm *{box-sizing:border-box}
+/* patio: capa fija sobre toda la página; solo la mascota recibe clics */
+.mm-yard{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.mm-leash{position:absolute;inset:0;width:100%;height:100%}
+.mm-leash path{fill:none;stroke:#c1121f;stroke-width:3;stroke-linecap:round}
+.mm-leash circle{fill:#c1121f;stroke:#fff;stroke-width:2}
+.mm-pet{position:absolute;left:-42px;top:-42px;width:84px;height:84px;pointer-events:auto;cursor:grab;touch-action:none;user-select:none;text-align:center;will-change:transform}
+.mm-pet.alzado{cursor:grabbing;z-index:2}
+.mm-cuerpo{font-size:62px;line-height:84px;transform:scaleX(var(--f,1));transition:transform .15s}
+.mm-cuerpo img{width:84px;height:84px;object-fit:contain;display:block;pointer-events:none}
+.mm-cuerpo.walk{animation:mmw .35s infinite}
+.mm-cuerpo.jump{animation:mmj .55s 4}
+.mm-cuerpo.eat{animation:mmq .3s 4}.mm-cuerpo.pat{animation:mmq .5s 2}.mm-cuerpo.no{animation:mmt .4s}
+.mm-pet.sit .mm-cuerpo:not(.walk):not(.jump):not(.eat):not(.pat){animation:mmb 2.4s infinite;transform:scaleX(var(--f,1)) scaleY(.88) translateY(6px)}
+.mm-pet.alzado .mm-cuerpo{transform:scaleX(var(--f,1)) rotate(-8deg) scale(1.1)}
+@keyframes mmw{0%,100%{transform:scaleX(var(--f,1)) translateY(0) rotate(-4deg)}50%{transform:scaleX(var(--f,1)) translateY(-7px) rotate(4deg)}}
+@keyframes mmj{50%{transform:scaleX(var(--f,1)) translateY(-28px) scaleY(1.1)}}
+@keyframes mmq{50%{transform:scaleX(var(--f,1)) scale(1.1,.88)}}
+@keyframes mmt{25%,75%{transform:scaleX(var(--f,1)) translateX(-7px)}50%{transform:scaleX(var(--f,1)) translateX(7px)}}
+@keyframes mmb{50%{transform:scaleX(var(--f,1)) scaleY(.92) translateY(4px)}}
+.mm-collar{display:none;position:absolute;left:23px;right:23px;bottom:27px;height:5px;background:#c1121f;border-radius:3px;border:1px solid #fff}
+.mm.con-correa .mm-collar{display:block}
+/* accesorios en pixel-art encima del perrito */
+.mm-cuerpo{position:relative}
+.mm-cuerpo .mm-acc-svg{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.mm-luz{animation:mmLuz 1.6s ease-in-out infinite;filter:drop-shadow(0 0 1px #fff8b0)}
+@keyframes mmLuz{50%{opacity:.55}}
+.mm-ala{opacity:.85;animation:mmAla .18s steps(2) infinite}
+@keyframes mmAla{50%{opacity:.35}}
+.mm-vista{position:relative;display:inline-block;line-height:0}
+.mm-vista svg{position:absolute;left:0;top:0;overflow:visible}
+@media (prefers-reduced-motion:reduce){.mm-luz,.mm-ala{animation:none}}
+.mm-nom{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);font-size:16px;font-weight:normal;background:var(--mp);border:2px solid var(--ma);padding:0 5px;white-space:nowrap}
+.mm-say{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:#fff;color:#3b2416;border:3px solid var(--ma);border-radius:8px;padding:0 7px;white-space:nowrap;display:none}
+/* efectos */
+.mm-p{position:absolute;pointer-events:none;font-size:24px;animation:mmp 1s forwards}
+@keyframes mmp{to{transform:translate(var(--dx,0),-56px);opacity:0}}
+.mm-food{position:absolute;line-height:0;margin:-20px 0 0 -20px;transition:top .5s ease-in;pointer-events:none}
+.mm-ball{position:absolute;font-size:30px;margin:-15px 0 0 -15px;pointer-events:none;animation:mmball .5s 5 alternate ease-out}
+@keyframes mmball{from{transform:translateY(0)}to{transform:translateY(-34px) rotate(180deg)}}
+.mm-hand{position:absolute;font-size:34px;margin:-17px 0 0 -17px;pointer-events:none;animation:mmh .5s 4 alternate}
+@keyframes mmh{from{transform:translateX(-14px) rotate(-15deg)}to{transform:translateX(14px) rotate(15deg)}}
+/* panel de control */
+.mm-dock{position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:55;background:var(--mp);border:4px solid var(--ma);box-shadow:4px 4px 0 #8a5a3b;border-radius:6px;padding:6px;display:grid;gap:4px;width:max-content;max-width:calc(100vw - 20px)}
+/* panel de control dentro de la columna derecha */
+.mm-dock.mm-dock-in{position:static;width:auto;max-width:none;background:none;border:0;box-shadow:none;padding:0;gap:8px}
+.mm-dock-in .mm-r{flex-wrap:wrap}.mm-dock-in .mm-r button{flex:1;min-height:40px;font-size:22px}
+.mm-bar{display:flex;gap:4px;align-items:center}.mm-bar div{flex:1;height:9px;border:2px solid var(--ma);background:#fff8}.mm-bar i{display:block;height:100%;background:var(--my);transition:width .3s}
+.mm-dock-in .mm-bar div{height:14px}
+.mm-r{display:flex;gap:4px}
+.mm button,.mm-f{font:inherit;background:var(--my);color:var(--mt);border:3px solid var(--ma);border-radius:4px;padding:0 7px;cursor:pointer;min-height:30px}
+.mm button:hover{background:#ffe27a}.mm button:active{transform:translate(1px,1px)}.mm button[aria-pressed=true]{background:#c1121f;color:#fff}
+/* álbum */
+.mm-al{position:fixed;inset:0;z-index:85;background:#000b;display:flex;align-items:center;justify-content:center;padding:12px}.mm-al[hidden]{display:none}
+.mm-ap{background:var(--mp);border:4px solid var(--ma);padding:12px;width:min(100%,640px);max-height:92vh;overflow:auto;position:relative}
+.mm-ap h3{margin:0 0 8px;font-weight:normal;font-size:26px}.mm-x{position:absolute;right:8px;top:8px}
+.mm-big{text-align:center;min-height:60px}.mm-big img{max-width:100%;max-height:56vh;border:3px solid var(--ma)}
+.mm-gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin:8px 0}
+.mm-gr div{position:relative}.mm-gr img{width:100%;aspect-ratio:1;object-fit:cover;border:3px solid var(--ma);cursor:pointer;display:block}
+.mm-gr .sel img{outline:3px solid #c1121f}
+.mm-gr b{position:absolute;right:-4px;top:-4px;background:#c1121f;color:#fff;width:20px;height:20px;border-radius:50%;text-align:center;font:13px/20px sans-serif;cursor:pointer}
+.mm-adm{display:none;border-top:2px dashed var(--ma);padding-top:8px;gap:4px;flex-direction:column}.mm-ed .mm-adm{display:flex}
+.mm-adm input[type=text]{font:inherit;padding:3px 6px;border:2px solid var(--ma);background:#fff8;color:inherit;width:100%}
+.mm-cuerpo svg{display:block;width:84px;height:84px}.mm-foto{border-radius:50%;border:4px solid var(--ma);background:#fff;object-fit:cover}
+.mm-r button{display:flex;align-items:center;justify-content:center;min-width:34px}
+@media (prefers-reduced-motion:reduce){.mm-cuerpo.walk,.mm-cuerpo.jump,.mm-cuerpo.eat,.mm-cuerpo.pat,.mm-pet.sit .mm-cuerpo{animation:none!important}}

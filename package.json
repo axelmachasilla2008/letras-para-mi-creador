@@ -1,0 +1,18 @@
+{
+  "name": "letras-para-mi-creador",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Blog de la creadora: servidor Node (Express) con los datos en MongoDB Atlas.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "node listar-archivos.js && node server.js",
+    "local": "node listar-archivos.js && node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "mongodb": "^6.12.0"
+  }
+}

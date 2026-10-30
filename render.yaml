@@ -1,0 +1,29 @@
+# Render (https://render.com) lee este archivo para publicar la página.
+# Render → New → Blueprint → elige este repositorio de GitHub.
+# Las claves (sync: false) las pide Render la primera vez: cópialas de tu .env.
+services:
+  - type: web
+    name: letras-para-mi-creador
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/sesion
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_PASSWORD
+        sync: false
+      - key: MONGODB_DB
+        value: letras
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_CORREO
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: MAX_UPLOAD_MB
+        value: "50"

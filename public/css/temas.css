@@ -1,0 +1,199 @@
+/* ============================================================
+   letras para mi creador — temas.css
+   Texturas, cabeceras animadas, partículas, criaturas y transición
+   de cada ambiente (Overworld, Nether, End, Enjambre, Minas…)
+   ============================================================ */
+
+/* textura del tema detrás de todo (pixelada, sin afectar a las fotos) */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -2;
+  pointer-events: none;
+  background: var(--textura, none) 0 0 / var(--textura-tam, 64px) repeat;
+  image-rendering: pixelated;
+}
+/* las partículas vuelan por encima de la página (no se pueden tocar, no estorban los clics) */
+#particulas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 40; pointer-events: none; image-rendering: pixelated; opacity: .9; }
+
+/* franja de arriba de la cabecera con los colores del tema */
+.hero::before {
+  background: linear-gradient(90deg, var(--f1) 0 12.5%, var(--f2) 0 25%, var(--f3) 0 37.5%, var(--f2) 0 50%, var(--f1) 0 62.5%, var(--f3) 0 75%, var(--f2) 0 87.5%, var(--f1) 0) 0 0 / 128px 100%;
+  box-shadow: 0 4px 0 var(--f0);
+}
+
+/* brillo de las tarjetas al pasar el mouse */
+.tarjeta:hover, .tarjeta:focus-visible, .destacada:hover { box-shadow: 9px 9px 0 var(--b2), 0 0 26px 2px var(--brillo, transparent); }
+.panel { transition: box-shadow .3s; }
+
+/* ---------- cabeceras ---------- */
+.hero-fx { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.hero-fx::before, .hero-fx::after { content: ""; position: absolute; }
+
+/* Overworld y Mobs pasivos: cielo con nubes pixeladas */
+body[data-ambiente=overworld] .hero-banner:not(.con-foto),
+body[data-ambiente=pasivos] .hero-banner:not(.con-foto) { background: linear-gradient(#4aa8ff, #9fd6ff 70%, #c9ecff); }
+body[data-ambiente=overworld] .hero-fx::before, body[data-ambiente=pasivos] .hero-fx::after {
+  top: 60px; left: 0; width: 16px; height: 16px; background: #fff;
+  box-shadow: 16px 0 #fff, 32px 0 #fff, 48px 0 #fff, 16px -16px #fff, 32px -16px #fff, 64px 0 #fff,
+    260px 50px #fff, 276px 50px #fff, 292px 50px #fff, 276px 34px #fff, 308px 50px #fff,
+    560px 10px #fff, 576px 10px #fff, 592px 10px #fff, 608px 10px #fff, 576px -6px #fff, 592px -6px #fff;
+  opacity: .9;
+  animation: nubes 70s linear infinite;
+}
+body[data-ambiente=overworld] .hero-fx::after { top: 130px; left: 0; width: 16px; height: 16px; background: #ffffffaa; box-shadow: 16px 0 #ffffffaa, 32px 0 #ffffffaa, 16px -16px #ffffffaa, 420px 30px #ffffffaa, 436px 30px #ffffffaa, 452px 30px #ffffffaa; animation: nubes 110s linear infinite -40s; }
+@keyframes nubes { from { transform: translateX(-700px); } to { transform: translateX(110vw); } }
+/* sol de los pasivos */
+body[data-ambiente=pasivos] .hero-fx::before { top: 40px; right: 60px; width: 64px; height: 64px; background: #ffe45c; box-shadow: 0 0 0 8px #fff3a0, 0 0 60px 20px #fff3a0aa; animation: latido 4s ease-in-out infinite; }
+@keyframes latido { 50% { transform: scale(1.06); } }
+
+/* Nether: netherrack oscuro y lava que respira abajo */
+body[data-ambiente=nether] .hero-banner:not(.con-foto) { background: var(--textura-cab) 0 0 / var(--textura-cab-tam) repeat, #3d1010; image-rendering: pixelated; }
+body[data-ambiente=nether] .hero-fx::after { left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(transparent, #ff6a0033 40%, #ff3d0077); animation: lava 3.5s ease-in-out infinite; }
+body[data-ambiente=nether] .hero-fx::before { left: 0; right: 0; bottom: 0; height: 10px; background: repeating-linear-gradient(90deg, #ff9d00 0 16px, #ff6a00 16px 32px, #ffcf3d 32px 40px); animation: lavaCorre 6s linear infinite; }
+@keyframes lava { 50% { opacity: .55; } }
+@keyframes lavaCorre { to { background-position: 80px 0; } }
+
+/* End: purpur y estrellas que titilan */
+body[data-ambiente=end] .hero-banner:not(.con-foto) { background: linear-gradient(#0b0614cc, #1b1028ee), var(--textura-cab) 0 0 / var(--textura-cab-tam) repeat; image-rendering: pixelated; }
+body[data-ambiente=end] .hero-fx::before, body[data-ambiente=end] .hero-fx::after {
+  inset: 0;
+  background-image: radial-gradient(#fff 1px, transparent 1.5px), radial-gradient(#e0aaff 1.5px, transparent 2px);
+  background-size: 90px 70px, 140px 110px;
+  background-position: 10px 20px, 60px 40px;
+  animation: titila 3s ease-in-out infinite;
+}
+body[data-ambiente=end] .hero-fx::after { background-position: 45px 55px, 20px 90px; animation-delay: -1.5s; }
+@keyframes titila { 50% { opacity: .25; } }
+
+/* Enjambre: colmena oscura y luces de concierto que se mueven */
+body[data-ambiente=enjambre] .hero-banner:not(.con-foto) { background: linear-gradient(#000000cc, #000000ee), var(--textura-cab) 0 0 / var(--textura-cab-tam) repeat; image-rendering: pixelated; }
+body[data-ambiente=enjambre] .hero-fx::before, body[data-ambiente=enjambre] .hero-fx::after {
+  top: -20%; width: 34%; height: 150%;
+  background: linear-gradient(#ffd40070, #ffd40000 85%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+  transform-origin: 50% 0;
+  animation: foco 4.5s ease-in-out infinite alternate;
+}
+body[data-ambiente=enjambre] .hero-fx::before { left: 8%; }
+body[data-ambiente=enjambre] .hero-fx::after { right: 8%; background: linear-gradient(#ffffff55, #ffffff00 85%); animation-delay: -2.2s; animation-direction: alternate-reverse; }
+@keyframes foco { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
+
+/* Minas: pizarra y luz de antorchas que parpadea */
+body[data-ambiente=minas] .hero-banner:not(.con-foto) { background: var(--textura-cab) 0 0 / var(--textura-cab-tam) repeat, #2c2c30; image-rendering: pixelated; }
+body[data-ambiente=minas] .hero-fx::before { inset: 0; background: radial-gradient(circle at 8% 30%, #ffb34766, transparent 32%), radial-gradient(circle at 92% 75%, #ffb34755, transparent 30%); animation: antorcha 2.4s steps(6) infinite; }
+@keyframes antorcha { 0%, 100% { opacity: 1; } 20% { opacity: .82; } 45% { opacity: .95; } 70% { opacity: .78; } }
+body[data-ambiente=minas] .panel { box-shadow: 4px 4px 0 var(--b2), 0 0 18px #f2c94c22; }
+
+/* Mobs hostiles: noche con luna y niebla */
+body[data-ambiente=hostiles] .hero-banner:not(.con-foto) { background: linear-gradient(#070b1a, #142033 70%, #1d2b24); }
+body[data-ambiente=hostiles] .hero-fx::before { top: 34px; right: 70px; width: 56px; height: 56px; background: #f5f3ce; box-shadow: inset -12px -8px 0 #d9d6a8, 0 0 50px 10px #f5f3ce55; }
+body[data-ambiente=hostiles] .hero-fx::after { left: -10%; right: -10%; bottom: 0; height: 45%; background: linear-gradient(transparent, #9fb3a855); filter: blur(6px); animation: niebla 9s ease-in-out infinite alternate; }
+@keyframes niebla { to { transform: translateX(6%); opacity: .6; } }
+
+/* Claro: rayos de luz suaves */
+body[data-ambiente=claro] .hero-banner:not(.con-foto) { background: linear-gradient(135deg, #5a3825, #7b4f33); }
+body[data-ambiente=claro] .hero-fx::before { inset: -50%; background: repeating-conic-gradient(from 0deg at 80% 0%, #ffffff10 0 6deg, transparent 6deg 18deg); animation: rayos 30s linear infinite; }
+@keyframes rayos { to { transform: rotate(10deg); } }
+/* Oscuro: cielo nocturno */
+body[data-ambiente=oscuro] .hero-banner:not(.con-foto) { background: linear-gradient(#0d0b10, #1d1b22); }
+body[data-ambiente=oscuro] .hero-fx::before { inset: 0; background-image: radial-gradient(#ffffffaa 1px, transparent 1.5px); background-size: 70px 60px; animation: titila 4s ease-in-out infinite; }
+
+.hero-cuerpo { z-index: 1; }
+
+/* ---------- criaturas que caminan ---------- */
+.criaturas { position: fixed; left: 0; right: 0; bottom: 0; height: 0; z-index: 45; pointer-events: none; }
+.criatura { position: absolute; left: 0; bottom: 2px; pointer-events: auto; cursor: pointer; will-change: transform; }
+.criatura svg { display: block; transform: scaleX(var(--d, 1)); filter: drop-shadow(2px 2px 0 #0006); }
+.criatura.camina svg { animation: pasito .36s steps(2) infinite; }
+@keyframes pasito { 50% { translate: 0 -3px; } }
+.criatura.salta svg { animation: saltito .5s ease-out 2; }
+@keyframes saltito { 50% { translate: 0 -22px; } }
+.criatura.explota svg { animation: inflar 1.5s ease-in forwards; }
+@keyframes inflar { 0% { filter: none; } 30%, 50%, 70% { filter: brightness(2.2); } 85% { transform: scaleX(var(--d, 1)) scale(1.5); opacity: 1; } 100% { transform: scaleX(var(--d, 1)) scale(2.2); opacity: 0; } }
+.criatura .dice {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; translate: -50% 0;
+  background: #fff; color: #222; border: 3px solid #222; border-radius: 8px;
+  padding: 2px 9px; white-space: nowrap; font-size: 19px;
+  box-shadow: 3px 3px 0 #0005;
+}
+.criatura .dice::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -6px; border: 6px solid transparent; border-top-color: #222; }
+.criatura .dice.der { left: 0; translate: 0 0; }
+.criatura .dice.der::after { left: 18px; }
+.criatura .dice.izq { left: auto; right: 0; translate: 0 0; }
+.criatura .dice.izq::after { left: auto; right: 12px; }
+@media (prefers-reduced-motion: no-preference) { .criatura .dice { animation: globo .25s cubic-bezier(.3, 1.6, .5, 1); } }
+@keyframes globo { from { scale: .6; opacity: 0; } }
+/* el enderman se teletransporta */
+.criatura.tele svg { animation: tele .9s ease-in-out; }
+@keyframes tele { 0% { opacity: 1; filter: none; } 40%, 55% { opacity: 0; transform: scaleX(var(--d, 1)) scaleY(1.4); filter: drop-shadow(0 0 8px #d77bff); } 100% { opacity: 1; } }
+
+/* ---------- personaje invitado en la cabecera (AuronPlay) ---------- */
+/* capa por la que se puede arrastrar (cubre toda la página, como la de los elementos libres) */
+#capa-cameo { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 30; pointer-events: none; }
+body.adm #capa-cameo, body.previa #capa-cameo { top: var(--barra, 0px); }
+.cameo { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; pointer-events: auto; }
+.cameo[hidden] { display: none; }
+.hero.con-cameo .hero-fila { margin-right: 86px; }
+.cameo-boton { padding: 0; border: 0; background: none; min-height: 0; line-height: 0; cursor: grab; touch-action: none; filter: drop-shadow(4px 4px 0 #0008); transition: transform .15s; }
+.cameo-boton:hover { background: none; transform: translateY(-4px) rotate(-2deg); }
+.cameo.moviendo .cameo-boton { cursor: grabbing; transform: scale(1.12) rotate(-6deg); filter: drop-shadow(8px 10px 0 #0006); }
+.cameo.globo-der .cameo-dice { right: auto; left: -4px; }
+.cameo.globo-der .cameo-dice::after { right: auto; left: 22px; }
+.cameo.globo-abajo .cameo-dice { bottom: auto; top: calc(100% + 10px); }
+.cameo.globo-abajo .cameo-dice::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #222; }
+.cameo-boton svg { display: block; width: 60px; height: auto; }
+.cameo.habla .cameo-boton svg { animation: cameoHabla .22s steps(2) 8; }
+@keyframes cameoHabla { 50% { transform: translateY(-3px); } }
+.cameo-nombre { margin-top: -18px; position: relative; font: 8px/1 var(--pix); color: #fff; background: #000c; padding: 5px 6px; white-space: nowrap; }
+.cameo-dice {
+  position: absolute; bottom: calc(100% + 10px); right: -4px;
+  width: max-content; max-width: min(260px, 60vw);
+  background: #fff; color: #222; border: 3px solid #222; border-radius: 12px;
+  padding: 6px 12px; font: 21px/1.15 VT323, monospace; text-align: left;
+  box-shadow: 4px 4px 0 #0007;
+}
+.cameo-dice::after { content: ""; position: absolute; right: 26px; top: 100%; border: 7px solid transparent; border-top-color: #222; }
+@media (prefers-reduced-motion: no-preference) { .cameo-dice:not([hidden]) { animation: globo .3s cubic-bezier(.3, 1.6, .5, 1); transform-origin: 85% 100%; } }
+.cameo-ajustes { position: absolute; top: -4px; left: -34px; width: 30px; height: 30px; min-height: 0; padding: 0; font-size: 15px; }
+@media (max-width: 700px) {
+  .cameo-boton svg { width: 40px; }
+  .hero.con-cameo .hero-fila { margin-right: 52px; }
+  .cameo-dice { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .cameo.habla .cameo-boton svg, .criatura.tele svg { animation: none; } }
+
+/* ---------- transición al cambiar de tema ---------- */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: revelar .8s cubic-bezier(.65, 0, .35, 1); }
+@keyframes revelar {
+  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
+
+/* ---------- elegir tema (en 🎨 Temas) ---------- */
+.amb-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.amb {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 2px;
+  min-height: 112px; padding: 8px; text-align: left;
+  background: var(--m) 0 0 / 48px 48px; image-rendering: pixelated;
+  color: #fff; text-shadow: 2px 2px 0 #000;
+  border: 4px solid #000; overflow: hidden;
+}
+.amb::before { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 20%, #000a); }
+.amb > * { position: relative; }
+.amb .amb-ico { font-size: 30px; line-height: 1; text-shadow: none; margin-bottom: auto; }
+.amb b { font: 10px/1.4 var(--pix); }
+.amb small { font-size: 15px; opacity: 1; line-height: 1.05; }
+.amb .amb-col { display: flex; gap: 3px; margin-top: 4px; }
+.amb .amb-col i { width: 14px; height: 14px; border: 2px solid #000; }
+.amb[aria-pressed=true] { outline: 4px solid var(--rojo); outline-offset: 2px; }
+.amb:hover { background: var(--m) 0 0 / 48px 48px; transform: translateY(-2px); }
+
+/* botón de efectos para visitantes (pie de página) */
+.efectos-btn { background: var(--pa); font-size: 18px; }
+.efectos-btn[aria-pressed=false] { opacity: .6; text-decoration: line-through; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx::before, .hero-fx::after, .criatura svg { animation: none !important; }
+  ::view-transition-new(root) { animation: none; }
+}

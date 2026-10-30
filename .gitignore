@@ -1,0 +1,21 @@
+# programas descargados (se reinstalan con npm install)
+node_modules/
+npm-debug.log*
+
+# contraseñas y claves privadas: NUNCA se suben a GitHub
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+service-account*.json
+*-firebase-adminsdk-*.json
+clave-*.json
+
+# respaldos con datos personales
+respaldo-atlas.json
+copia-*.json
+
+# archivos del sistema
+.DS_Store
+Thumbs.db

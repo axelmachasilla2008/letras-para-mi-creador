@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://letras-para-mi-creador.web.app/sitemap.xml
